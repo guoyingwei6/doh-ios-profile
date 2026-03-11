@@ -10,11 +10,11 @@ One-click DNS over HTTPS profile for iPhone / iPad using `doh.guoyingwei.top`. N
 
 | Profile | Server | Description |
 |---------|--------|-------------|
-| [GYW DoH](https://raw.githubusercontent.com/guoyingwei6/doh-ios-profile/main/DOH-GYW.mobileconfig) | `doh.guoyingwei.top` | Self-hosted, clean, no logging |
+| [GYW DoH](https://guoyingwei6.github.io/doh-ios-profile/DOH-GYW.mobileconfig) | `doh.guoyingwei.top` | Self-hosted, clean, no logging |
 
-**Direct link:**
+**Direct link (open in iPhone Safari):**
 ```
-https://raw.githubusercontent.com/guoyingwei6/doh-ios-profile/main/DOH-GYW.mobileconfig
+https://guoyingwei6.github.io/doh-ios-profile/DOH-GYW.mobileconfig
 ```
 
 > Open the link above in **Safari** on your iPhone (not Chrome/Firefox).
