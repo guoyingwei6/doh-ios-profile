@@ -1,4 +1,4 @@
-# Guoyingwei Self-hosted DoH for iOS
+# Self-hosted DoH for iOS
 
 One-click DNS over HTTPS profile for iPhone / iPad using `doh.guoyingwei.top`. No proxy software required.
 
