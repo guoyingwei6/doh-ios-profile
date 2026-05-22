@@ -37,9 +37,9 @@ To remove: **Settings → General → VPN & Device Management** → tap profile 
 |-------|-------|-------------|
 | `ServerURL` | `https://doh.guoyingwei.top/dns-query` | DoH query endpoint |
 | `ServerName` | `doh.guoyingwei.top` | TLS SNI hostname |
-| `ServerAddresses` | `119.29.29.29`, `223.5.5.5` | Bootstrap IPs — fixes iOS cold-start DNS deadlock |
+| `ServerAddresses` | `104.21.12.94`, `172.67.131.248` | Actual IPs of `doh.guoyingwei.top` (Cloudflare Anycast) — iOS connects directly without DNS lookup |
 
-**Why bootstrap IPs?** When iOS first connects to a DoH server, it needs to resolve the domain — but the DNS *is* that DoH server (deadlock). `ServerAddresses` provides DNSPod (`119.29.29.29`) and Alibaba (`223.5.5.5`) IPs as a one-time bootstrap to resolve `doh.guoyingwei.top`. All subsequent DNS queries go through the self-hosted DoH. These bootstrap IPs are used only for the initial domain resolution — `1.1.1.1` was the previous choice but is unreliable in mainland China.
+**Why hardcode IPs?** `ServerAddresses` tells iOS which IP to connect to for the DoH server. Without it, iOS must first do a DNS lookup to resolve `doh.guoyingwei.top` — but DNS *is* this DoH server (deadlock). CF Anycast IPs are highly stable in practice. `ServerName` ensures TLS certificate validation uses the correct hostname.
 
 ---
 
@@ -87,6 +87,6 @@ https://guoyingwei6.github.io/doh-ios-profile/DOH-GYW.mobileconfig
 |------|------|
 | `ServerURL` | DoH 查询端点 |
 | `ServerName` | TLS SNI 域名 |
-| `ServerAddresses` | Bootstrap IP（`119.29.29.29`/`223.5.5.5`），仅用于首次解析域名，后续全走自建 DoH；`1.1.1.1` 在国内不可达故弃用 |
+| `ServerAddresses` | `doh.guoyingwei.top` 的真实 CF Anycast IP，iOS 直接连接无需 DNS 解析；`ServerName` 保证 TLS 证书验证正确 |
 
 **注意：** 描述文件会将所有 App 的 DNS 查询路由到该服务器，服务器不记录日志，但安装即代表信任。

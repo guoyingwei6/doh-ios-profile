@@ -11,8 +11,8 @@
                 <string>HTTPS</string>
                 <key>ServerAddresses</key>
                 <array>
-                    <string>119.29.29.29</string>
-                    <string>223.5.5.5</string>
+                    <string>104.21.12.94</string>
+                    <string>172.67.131.248</string>
                 </array>
                 <key>ServerName</key>
                 <string>doh.guoyingwei.top</string>
