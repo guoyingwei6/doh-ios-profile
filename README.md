@@ -1,53 +1,60 @@
 # Self-hosted DoH for iOS
 
-One-click DNS over HTTPS profile for iPhone / iPad using `doh.guoyingwei.top`. No proxy software required.
+一键让 iPhone / iPad 全局使用自建 DoH（DNS over HTTPS）服务器，无需任何代理软件。
 
-> 一键让 iPhone / iPad 全局使用自建 DoH 服务器，无需任何代理软件。
+**服务器：** `doh.guoyingwei.top`（基于 Cloudflare Workers 自建，无日志）
 
 ---
 
-## Install (Open in iPhone Safari)
+## 安装（用 iPhone Safari 打开）
 
-| Profile | Server | Description |
-|---------|--------|-------------|
-| [GYW DoH](https://guoyingwei6.github.io/doh-ios-profile/DOH-GYW.mobileconfig) | `doh.guoyingwei.top` | Self-hosted, clean, no logging |
-
-**Direct link (open in iPhone Safari):**
+**直链：**
 ```
 https://guoyingwei6.github.io/doh-ios-profile/DOH-GYW.mobileconfig
 ```
 
-> Open the link above in **Safari** on your iPhone (not Chrome/Firefox).
+> 必须用 **Safari** 打开，Chrome/Firefox 不支持安装描述文件。
 
 ---
 
-## How to Install
+## 安装步骤
 
-1. Open the link above in **Safari**
-2. Tap **Allow** when prompted to download the profile
-3. Go to **Settings → General → VPN & Device Management**
-4. Tap the downloaded profile → **Install** → enter passcode → **Install**
-5. Reboot recommended
+1. Safari 打开上方链接
+2. 弹出提示点 **允许**（下载描述文件）
+3. 前往 **设置 → 通用 → VPN与设备管理**
+4. 点击已下载的描述文件 → **安装** → 输入密码 → **安装**
+5. 建议重启一次
 
-To remove: **Settings → General → VPN & Device Management** → tap profile → **Remove**
-
----
-
-## How to Verify
-
-Visit [dnsleaktest.com](https://dnsleaktest.com) → Extended Test → confirm resolver shows `doh.guoyingwei.top`.
+卸载：**设置 → 通用 → VPN与设备管理** → 点击描述文件 → **移除描述文件**
 
 ---
 
-## Warning
+## Profile 说明
 
-- This profile routes **all DNS queries** from every app (Safari, WeChat, banking apps, etc.) through my server.
-- I do not log any queries — but you are trusting my server by installing this.
-- Use at your own risk. Uninstall anytime via Settings.
-- To get the latest version, simply re-open the install link above.
+| 字段 | 值 | 说明 |
+|------|----|------|
+| `ServerURL` | `https://doh.guoyingwei.top/dns-query` | DoH 查询端点 |
+| `ServerName` | `doh.guoyingwei.top` | TLS SNI 域名 |
+| `ServerAddresses` | `1.1.1.1`, `1.0.0.1` | Bootstrap IP，解决 iOS 冷启动时 DNS 死锁问题 |
+
+**Bootstrap 原理：** iOS 首次连接 DoH 服务器时需要先解析域名，但 DNS 就是该 DoH 本身（死锁）。`ServerAddresses` 填入 Cloudflare 固定 IP（`1.1.1.1`/`1.0.0.1`）作为引导，iOS 用这两个 IP 解析域名后再切换到自建 DoH，之后全程走自建服务器。
 
 ---
 
-## Related Projects
+## 验证
 
-- [paulmillr/encrypted-dns](https://github.com/paulmillr/encrypted-dns) — curated public DoH/DoT profiles
+访问 [dnsleaktest.com](https://dnsleaktest.com) → Extended Test → 确认解析器显示 `doh.guoyingwei.top`。
+
+---
+
+## 注意事项
+
+- 描述文件会将设备**所有 App 的 DNS 查询**（Safari、微信、银行 App 等）路由到该服务器
+- 服务器不记录任何查询日志，但安装即代表信任该服务器
+- 重新打开安装链接即可更新到最新版本
+
+---
+
+## 相关项目
+
+- [paulmillr/encrypted-dns](https://github.com/paulmillr/encrypted-dns) — 公共 DoH/DoT 描述文件合集
