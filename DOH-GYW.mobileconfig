@@ -9,6 +9,11 @@
             <dict>
                 <key>DNSProtocol</key>
                 <string>HTTPS</string>
+                <key>ServerAddresses</key>
+                <array>
+                    <string>104.21.12.94</string>
+                    <string>172.67.131.248</string>
+                </array>
                 <key>ServerName</key>
                 <string>doh.guoyingwei.top</string>
                 <key>ServerURL</key>
