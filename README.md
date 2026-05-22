@@ -37,9 +37,9 @@ To remove: **Settings → General → VPN & Device Management** → tap profile 
 |-------|-------|-------------|
 | `ServerURL` | `https://doh.guoyingwei.top/dns-query` | DoH query endpoint |
 | `ServerName` | `doh.guoyingwei.top` | TLS SNI hostname |
-| `ServerAddresses` | `1.1.1.1`, `1.0.0.1` | Bootstrap IPs — fixes iOS cold-start DNS deadlock |
+| `ServerAddresses` | `119.29.29.29`, `223.5.5.5` | Bootstrap IPs — fixes iOS cold-start DNS deadlock |
 
-**Why bootstrap IPs?** When iOS first connects to a DoH server, it needs to resolve the domain — but the DNS *is* that DoH server (deadlock). `ServerAddresses` provides Cloudflare's permanent IPs (`1.1.1.1`/`1.0.0.1`) as a bootstrap so iOS can resolve the domain and then switch fully to the self-hosted DoH.
+**Why bootstrap IPs?** When iOS first connects to a DoH server, it needs to resolve the domain — but the DNS *is* that DoH server (deadlock). `ServerAddresses` provides DNSPod (`119.29.29.29`) and Alibaba (`223.5.5.5`) IPs as a one-time bootstrap to resolve `doh.guoyingwei.top`. All subsequent DNS queries go through the self-hosted DoH. These bootstrap IPs are used only for the initial domain resolution — `1.1.1.1` was the previous choice but is unreliable in mainland China.
 
 ---
 
@@ -87,6 +87,6 @@ https://guoyingwei6.github.io/doh-ios-profile/DOH-GYW.mobileconfig
 |------|------|
 | `ServerURL` | DoH 查询端点 |
 | `ServerName` | TLS SNI 域名 |
-| `ServerAddresses` | Bootstrap IP（`1.1.1.1`/`1.0.0.1`），解决 iOS 冷启动 DNS 死锁 |
+| `ServerAddresses` | Bootstrap IP（`119.29.29.29`/`223.5.5.5`），仅用于首次解析域名，后续全走自建 DoH；`1.1.1.1` 在国内不可达故弃用 |
 
 **注意：** 描述文件会将所有 App 的 DNS 查询路由到该服务器，服务器不记录日志，但安装即代表信任。
